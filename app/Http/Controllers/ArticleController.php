@@ -11,25 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -61,8 +42,11 @@ class ArticleController extends Controller
             ->join('messages', 'articles.id', '=', 'message_article_id')
             ->where('message_article_id', '=', $id)
             ->get();
+        $roles = Role::where('uid', '=', Auth::user()->id)->get();
+
         return view('show')
-            ->with('articles', $post);
+            ->with('articles', $post)
+            ->with('roles',$roles);
     }
 
     /**

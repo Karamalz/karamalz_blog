@@ -19,9 +19,9 @@ Route::get('/message/delete/{article_id}/{message_id}', 'MessageController@destr
 
 Route::resource('message', 'MessageController', ['except' => ['index', 'show', 'create', 'store', 'edit']]);
 
-Route::get('/article/{id}', 'ArticleController@show');
-
 Route::resource('article', 'ArticleController', ['except' => ['index', 'show']]);
+
+Route::get('/article/{id}', 'ArticleController@show');
 
 Route::get('/catagory/{catagory}', 'ArticleController@catagory');
 
