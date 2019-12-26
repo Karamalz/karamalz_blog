@@ -26,7 +26,7 @@
                     <a class="nav-link" href="/catagory/Vuejs">Vuejs</a>
                 </li>
                 <li class="nav-item @yield('nav_cpp')">
-                    <a class="nav-link" href="/catagory/cpp">C++</a>
+                    <a class="nav-link" href="/catagory/c++">C++</a>
                 </li>
                 <li class="nav-item @yield('nav_else')">
                     <a class="nav-link" href="/catagory/Else">Else</a>
