@@ -65,3 +65,8 @@ site-heading-upper {
 .centering {
     margin: 0 auto;
 }
+
+.btnbtn {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}

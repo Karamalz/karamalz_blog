@@ -103,7 +103,8 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return Redirect('/home');
+
+        return redirect('/home');
     }
 
     public function catagory($catagory)

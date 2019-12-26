@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="div-center mt-4" style="padding-left:15%">
-            <div class="center" style="width:50%;border:1px solid;">
+            <div class="center" style="width:50%;">
                 <main class="py-4">
                     @yield('content')
                 </main>

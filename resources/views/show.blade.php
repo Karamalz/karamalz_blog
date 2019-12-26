@@ -33,8 +33,8 @@
 
                 </div>
             </div>
-        @endforeach
-
+        
+            @if($loop->last)
             <form style="text-align:center;font-family:verdana" method="POST" action="/message/{{ $article->message_article_id }}">
             
             @csrf
@@ -45,6 +45,9 @@
                     <button class="button is-link" type="submit">Submit</button>
                 </div>
             </form>
+            @endif
+        @endforeach
         @endif
+
 
 @endsection
