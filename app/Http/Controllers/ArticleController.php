@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function create()
+    {
+        return view('create');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,14 +47,17 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $post = DB::table('articles')
+        /*$post = DB::table('articles')
             ->join('messages', 'articles.id', '=', 'message_article_id')
             ->where('message_article_id', '=', $id)
-            ->get();
+            ->get();*/
+        $article = Article::where('id', '=', $id)->get();
+        $message = Message::where('message_article_id', '=', $id)->get();
         $roles = Role::where('uid', '=', Auth::user()->id)->get();
 
         return view('show')
-            ->with('articles', $post)
+            ->with('articles', $article)
+            ->with('messages', $message)
             ->with('roles',$roles);
     }
 

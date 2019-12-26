@@ -17,8 +17,6 @@ Route::post('/message/{article_id}', 'MessageController@store');
 
 Route::get('/message/delete/{article_id}/{message_id}', 'MessageController@destroy');
 
-Route::resource('message', 'MessageController', ['except' => ['index', 'show', 'create', 'store', 'edit']]);
-
 Route::resource('article', 'ArticleController', ['except' => ['index', 'show']]);
 
 Route::get('/article/{id}', 'ArticleController@show');

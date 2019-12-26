@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +29,7 @@ class MessageController extends Controller
      */
     public function store(Request $request, $article_id)
     {
+        echo 'test'.$article_id;
         $message = new Message();
         $message->message_article_id = $article_id;
         $message->message_author = Auth::user()->name;
