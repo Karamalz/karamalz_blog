@@ -11,6 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
+
+Route::post('/message/{article_id}', 'MessageController@store');
+
+Route::get('/message/delete/{article_id}/{message_id}', 'MessageController@destroy');
+
+Route::resource('message', 'MessageController', ['except' => ['index', 'show', 'create', 'store', 'edit']]);
+
+Route::get('/article/{id}', 'ArticleController@show');
+
+Route::resource('article', 'ArticleController', ['except' => ['index', 'show']]);
+
+Route::get('/catagory/{catagory}', 'ArticleController@catagory');
+
+Route::get('/search', 'ArticleController@search');
+
+Route::get('/role', 'RoleController@index');
+
+Route::get('/role/{name}', 'RoleController@create');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', 'HomeController@index');
