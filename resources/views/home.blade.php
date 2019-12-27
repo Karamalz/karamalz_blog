@@ -32,15 +32,33 @@
     </div>
     @elseif ($role->roles != 'normal')
 
-        <span style="visibility:hidden;"><a href="{{ route('article.edit', $post->id) }}" class="active" style="font-family:verdana">編輯</a></span>
+        <form style="visibility:hidden; display:inline; text-align: center;" action="{{ route('article.edit', $post->id) }}" method="get">
+        @csrf
+
+            <button type="submit" name="delete" value="delete" class="btnbtn">Edit</button> 
+        </form>
         &nbsp;
-        <span><a href="{{ route('article.destroy', $post->id) }}" class="active" style="font-family:verdana">刪除</a></span>
+        <form style="display:inline; text-align: center;" action="{{ route('article.destroy', $post->id) }}" method="post">
+        @csrf
+        @method('DELETE')
+
+            <button type="submit" name="delete" value="delete" class="btnbtn">Delete</button> 
+        </form>
     </div>
     @else
     
-        <span style="visibility:hidden;"><a href="{{ route('article.edit', $post->id) }}" class="active" style="font-family:verdana">編輯</a></span>
+        <form style="visibility:hidden; display:inline; text-align: center;" action="{{ route('article.edit', $post->id) }}" method="get">
+        @csrf
+
+            <button type="submit" name="delete" value="delete" class="btnbtn">Edit</button> 
+        </form>
         &nbsp;
-        <span style="visibility:hidden;"><a href="{{ route('article.destroy', $post->id) }}" class="active" style="font-family:verdana">刪除</a></span>
+        <form style="visibility:hidden; display:inline; text-align: center;" action="{{ route('article.destroy', $post->id) }}" method="post">
+        @csrf
+        @method('DELETE')
+
+            <button type="submit" name="delete" value="delete" class="btnbtn">Delete</button> 
+        </form>
     </div>
     @endif
     @endforeach
