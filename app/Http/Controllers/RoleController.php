@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
+    public function index()
+    {
+        return view('role');
+    }
     public function create()
     {
         $role = new Role();
