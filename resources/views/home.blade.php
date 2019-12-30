@@ -15,15 +15,14 @@
         &nbsp;
 
         
-        <form style="display:inline; text-align: center;" action="{{ route('article.edit', $post->id) }}" method="get">
+        <form style="display:inline; text-align: center;" action="/article/{{ $post->id }}/edit" method="get">
         @csrf
 
-            <button type="submit" name="delete" value="delete" class="btnbtn">Edit</button> 
+            <button type="submit" name="edit" value="edit" class="btnbtn">Edit</button> 
         </form>
         &nbsp;
-        <form style="display:inline; text-align: center;" action="{{ route('article.destroy', $post->id) }}" method="post">
+        <form style="display:inline; text-align: center;" action="/article/{{ $post->id }}/delete" method="post">
         @csrf
-        @method('DELETE')
 
             <button type="submit" name="delete" value="delete" class="btnbtn">Delete</button> 
         </form>

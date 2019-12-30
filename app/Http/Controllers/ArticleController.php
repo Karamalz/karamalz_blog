@@ -43,22 +43,22 @@ class ArticleController extends Controller
             ->with('messages', $this->messageRepo->getMessageByArticleId($id));
     }
 
-    public function edit(Article $article)
+    public function edit($id)
     {
         return view('edit')
-            ->with('article', $article);
+            ->with('articles', $this->articleRepo->getArticleById($id));
     }
 
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $id)
     {
-        $this->articleRepo->articleEdit($request, $article->id);
+        $this->articleRepo->articleEdit($request, $id);
 
         return redirect('/home');
     }
 
-    public function destroy(Article $article)
+    public function destroy($id)
     {
-        $this->articleRepo->articleDestroy($article->id);
+        $this->articleRepo->articleDestroy($id);
 
         return redirect('/home');
     }
@@ -73,5 +73,11 @@ class ArticleController extends Controller
     {
         return view('home')
             ->with('posts', $this->articleRepo->getArticleByKeyword($request->key));
+    }
+
+    public function user($name)
+    {
+        return view('home')
+            ->with('posts', $this->articleRepo->getArticleByUsername($name));
     }
 }

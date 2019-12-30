@@ -14,22 +14,22 @@
                     <a class="nav-link" href="/home">All</a>
                 </li>
                 <li class="nav-item @yield('nav_laravel')">
-                    <a class="nav-link" href="/catagory/Laravel">Laravel</a>
+                    <a class="nav-link" href="/article/catagory/Laravel">Laravel</a>
                 </li>
                 <li class="nav-item @yield('nav_php')">
-                    <a class="nav-link" href="/catagory/PHP">PHP</a>
+                    <a class="nav-link" href="/article/catagory/PHP">PHP</a>
                 </li>
                 <li class="nav-item @yield('nav_mysql')">
-                    <a class="nav-link" href="/catagory/MySQL">MySQL</a>
+                    <a class="nav-link" href="/article/catagory/MySQL">MySQL</a>
                 </li>
                 <li class="nav-item @yield('nav_vuejs')">
-                    <a class="nav-link" href="/catagory/Vuejs">Vuejs</a>
+                    <a class="nav-link" href="/article/catagory/Vuejs">Vuejs</a>
                 </li>
                 <li class="nav-item @yield('nav_cpp')">
-                    <a class="nav-link" href="/catagory/c++">C++</a>
+                    <a class="nav-link" href="/article/catagory/c++">C++</a>
                 </li>
                 <li class="nav-item @yield('nav_else')">
-                    <a class="nav-link" href="/catagory/Else">Else</a>
+                    <a class="nav-link" href="/article/catagory/Else">Else</a>
                 </li>
             </ul>
         </div>

@@ -6,13 +6,13 @@
         <p style="font-size:24px" >Search Article</p>
     </div>
     <div style="text-align:center">
-        <form style="border:1px solid; text-align:center; height:50px; width:100%" method="GET" action="/search">
+        <form style="border:1px solid; text-align:center; height:50px; width:100%" method="GET" action="/article/search">
             <textarea style="margin-top:10px; display:inline;" name="key" id="key" rows="1" cols="30"></textarea>
             &nbsp;
             <button style="margin-top:10px; position:absolute" class="button" type="submit">Search</button>
         </form>
     </div>
     <div style="text-align:center; padding-top:10px">
-        <a style="font-size:24px" href="{{ route('article.create') }}">New Article</a>
+        <a style="font-size:24px" href="/article/create">New Article</a>
     </div>
 </div>

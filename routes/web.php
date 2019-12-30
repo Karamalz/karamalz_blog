@@ -19,21 +19,28 @@ Route::post('/message/{article_id}', 'MessageController@store');
 Route::get('/message/delete/{article_id}/{message_id}', 'MessageController@destroy');
 
 //article
-Route::resource('article', 'ArticleController', ['except' => ['index', 'show']]);
+Route::group( ['prefix' => 'article', 'middleware' => 'auth'], function() {
+    Route::post('store', 'ArticleController@store');
 
-Route::get('/article/{id}', 'ArticleController@show');
+    Route::post('update/{id}', 'ArticleController@update');
 
-Route::get('/catagory/{catagory}', 'ArticleController@catagory');
+    Route::post('{id}/delete', 'ArticleController@destroy');
 
-Route::get('/search', 'ArticleController@search');
+    Route::get('', 'ArticleController@index');
 
-//role
-Route::get('/role', 'RoleController@index');
+    Route::get('create', 'ArticleController@create');
 
-Route::get('/role/{name}', 'RoleController@create');
+    Route::get('{id}/edit', 'ArticleController@edit');
+
+    Route::get('/catagory/{catagory}', 'ArticleController@catagory');
+
+    Route::get('/search', 'ArticleController@search');
+    
+    Route::get('{id}', 'ArticleController@show');
+});
 
 //user
-Route::get('/user/{name}', 'UserController@show');
+Route::get('/user/{name}', 'ArticleController@user');
 
 //home
 Route::get('/home', 'ArticleController@index')->name('home');

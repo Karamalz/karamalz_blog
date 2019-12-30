@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form class="mt-3" method="POST" action="{{ route('article.store') }}">
+<form class="mt-3" method="POST" action="/article/store">
     @csrf
 
     <div class="field">

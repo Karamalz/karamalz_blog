@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
-<form class="mt-3" method="POST" action="{{ route('article.update', $article->id) }}">
+@if (isset($articles))
+@foreach($articles as $article)
+<form class="mt-3" method="POST" action="/article/update/{{ $article->id }}">
     @csrf
-    @method('PUT')
 
     <div class="field">
         <h3>Title</h3>
@@ -95,4 +95,6 @@
         </div>
     </div>
 </form>
+@endforeach
+@endif
 @endsection
