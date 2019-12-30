@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\Role;
+use App\repositories\ArticleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function __construct()
+    protected $articleRepo;
+
+    public function __construct(ArticleRepository $articleRepo)
     {
-        $this->middleware('auth');
+        $this->articleRepo = $articleRepo;
     }
     
     public function show($name)
     {
-        $article = Article::where('author', '=', $name)->get();
-        $roles = Role::where('uid', '=', Auth::user()->id)->get();
-
         return view('home')
-            ->with('posts', $article)
-            ->with('roles',$roles);
+            ->with('posts', $this->articleRepo->getArticleByUsername($name));
     }
 }

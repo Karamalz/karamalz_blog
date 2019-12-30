@@ -36,6 +36,6 @@ Route::get('/role/{name}', 'RoleController@create');
 Route::get('/user/{name}', 'UserController@show');
 
 //home
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ArticleController@index')->name('home');
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'ArticleController@index');

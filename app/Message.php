@@ -11,4 +11,10 @@ class Message extends Model
     protected $fillable = [
         'message_article_id', 'message_author_id', 'message_author', 'message_content'
     ];
+
+    public function articles()
+    {
+        return $this->belongsTo('App\Article');
+    }
+
 }

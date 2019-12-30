@@ -15,4 +15,9 @@ class Article extends Model
     {
         return $this->hasMany('App\Message', 'message_article_id');
     }
+
+    public function users()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -44,6 +44,11 @@ class ArticleRepository{
         return Article::find($id)->delete();
     }
 
+    public function getAllArticle()
+    {
+        return Article::all();
+    }
+
     public function getArticleById($id)
     {
         return Article::where('id', '=', $id)->get();
@@ -59,6 +64,9 @@ class ArticleRepository{
         return Article::where('title', 'like', "%".$key."%")->get();
     }
 
-    
+    public function getArticleByUsername($name)
+    {
+        return Article::where('author', '=', $name)->get();
+    }
 
 }

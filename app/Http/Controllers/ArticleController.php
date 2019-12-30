@@ -18,6 +18,12 @@ class ArticleController extends Controller
         $this->messageRepo = $messageRepo;
     }
 
+    public function index()
+    {
+        return view('home')
+            ->with('posts',$this->articleRepo->getAllArticle());
+    }
+
     public function create()
     {
         return view('create');
