@@ -21,17 +21,7 @@
                     <p style="font-size:22px;">{{ $message->message_content }}</p>
                 </div>
                 <div  style="text-align:right; font-size:12px;">
-                @if (Auth::user()->name == $message->message_author)
-
-                    <span><a href="/message/delete/{{ $article->id }}/{{ $message->message_id }}" class="active" style="font-family:verdana">刪除</a></span>
-                @elseif (Auth::user()->name == $article->author)
-
-                    <span><a href="/message/delete/{{ $article->id }}/{{ $message->message_id }}" class="active" style="font-family:verdana">刪除</a></span>
-                @else
-
-                    <span style="visibility:hidden;"><a href="" class="active" style="font-family:verdana">刪除</a></span>
-                @endif
-
+                <span><a href="/message/delete/{{ $article->id }}/{{ $message->message_id }}" class="active" style="font-family:verdana">刪除</a></span>
                 </div>
             </div>
             @endforeach
