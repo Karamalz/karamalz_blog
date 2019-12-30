@@ -8,6 +8,10 @@ class Role extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = [
+        'uid', 'roles', 'description'
+    ];
+
     public function users()
     {
         return $this->belongsTo('App\User');
