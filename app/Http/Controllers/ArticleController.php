@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\Role;
 use App\Message;
-use DB;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,9 +47,9 @@ class ArticleController extends Controller
     public function show($id)
     {
         /*$post = DB::table('articles')
-            ->join('messages', 'articles.id', '=', 'message_article_id')
-            ->where('message_article_id', '=', $id)
-            ->get();*/
+        ->join('messages', 'articles.id', '=', 'message_article_id')
+        ->where('message_article_id', '=', $id)
+        ->get();*/
         $article = Article::where('id', '=', $id)->get();
         $message = Message::where('message_article_id', '=', $id)->get();
         $roles = Role::where('uid', '=', Auth::user()->id)->get();
@@ -58,7 +57,7 @@ class ArticleController extends Controller
         return view('show')
             ->with('articles', $article)
             ->with('messages', $message)
-            ->with('roles',$roles);
+            ->with('roles', $roles);
     }
 
     /**
@@ -110,16 +109,16 @@ class ArticleController extends Controller
 
         return view('home')
             ->with('posts', $article)
-            ->with('roles',$roles);
+            ->with('roles', $roles);
     }
 
     public function search(Request $request)
     {
-        $article = Article::where('title', 'like', "%".$request->key."%")->get();
+        $article = Article::where('title', 'like', "%" . $request->key . "%")->get();
         $roles = Role::where('uid', '=', Auth::user()->id)->get();
 
         return view('home')
             ->with('posts', $article)
-            ->with('roles',$roles);
+            ->with('roles', $roles);
     }
 }
