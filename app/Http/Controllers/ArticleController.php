@@ -38,6 +38,7 @@ class ArticleController extends Controller
 
     public function show($id)
     {
+        echo $id;
         return view('show')
             ->with('articles', $this->articleRepo->getArticleById($id))
             ->with('messages', $this->messageRepo->getMessageByArticleId($id));
@@ -45,12 +46,16 @@ class ArticleController extends Controller
 
     public function edit($id)
     {
+        $article = $this->articleRepo->getArticleById($id);
+        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id,403);
         return view('edit')
-            ->with('articles', $this->articleRepo->getArticleById($id));
+            ->with('articles', $article);
     }
 
     public function update(Request $request, $id)
     {
+        $article = $this->articleRepo->getArticleById($id);
+        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id,403);
         $this->articleRepo->articleEdit($request, $id);
 
         return redirect('/home');
@@ -58,6 +63,8 @@ class ArticleController extends Controller
 
     public function destroy($id)
     {
+        $article = $this->articleRepo->getArticleById($id);
+        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id,403);
         $this->articleRepo->articleDestroy($id);
 
         return redirect('/home');
