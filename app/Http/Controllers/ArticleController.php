@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\Message;
-use App\Role;
 use App\repositories\ArticleRepository;
+use App\repositories\MessageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
     protected $articleRepo;
+    protected $messageRepo;
 
-    public function __construct(ArticleRepository $articleRepo)
+    public function __construct(ArticleRepository $articleRepo, MessageRepository $messageRepo)
     {
         $this->articleRepo = $articleRepo;
+        $this->messageRepo = $messageRepo;
     }
 
     public function create()
@@ -23,12 +23,6 @@ class ArticleController extends Controller
         return view('create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->articleRepo->articleStore($request);
@@ -36,46 +30,19 @@ class ArticleController extends Controller
         return Redirect('/home');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        /*$post = DB::table('articles')
-        ->join('messages', 'articles.id', '=', 'message_article_id')
-        ->where('message_article_id', '=', $id)
-        ->get();*/
-        $message = Message::where('message_article_id', '=', $id)->get();
-        $roles = Role::where('uid', '=', Auth::user()->id)->get();
-
         return view('show')
             ->with('articles', $this->articleRepo->getArticleById($id))
-            ->with('messages', $message)
-            ->with('roles', $roles);
+            ->with('messages', $this->messageRepo->getMessageByArticleId($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Article $article)
     {
         return view('edit')
             ->with('article', $article);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Article $article)
     {
         $this->articleRepo->articleEdit($request, $article->id);
@@ -83,12 +50,6 @@ class ArticleController extends Controller
         return redirect('/home');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Article $article)
     {
         $this->articleRepo->articleDestroy($article->id);
@@ -98,21 +59,13 @@ class ArticleController extends Controller
 
     public function catagory($catagory)
     {
-        $article = $this->articleRepo->getArticleByCatagory($catagory);
-        $roles = Role::where('uid', '=', Auth::user()->id)->get();
-
         return view('home')
-            ->with('posts', $article)
-            ->with('roles', $roles);
+            ->with('posts', $this->articleRepo->getArticleByCatagory($catagory));
     }
 
     public function search(Request $request)
     {
-        $article = $this->articleRepo->getArticleByKeyword($request->key);
-        $roles = Role::where('uid', '=', Auth::user()->id)->get();
-
         return view('home')
-            ->with('posts', $article)
-            ->with('roles', $roles);
+            ->with('posts', $this->articleRepo->getArticleByKeyword($request->key));
     }
 }

@@ -40,11 +40,8 @@ class ArticleRepository{
     }
 
     public function articleDestroy($id)
-    {
-        $delete_article = Article::find($id);
-        $delete_article->delete();
-        
-        return;
+    {      
+        return Article::find($id)->delete();
     }
 
     public function getArticleById($id)

@@ -6,14 +6,17 @@ use App\Article;
 use App\Role;
 use App\Message;
 use DB;
+use App\repositories\MessageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    public function __construct()
+    protected $messageRepo;
+
+    public function __construct(MessageRepository $messageRepo)
     {
-        $this->middleware('auth');
+        $this->messageRepo = $messageRepo;
     }
     /**
      * Display a listing of the resource.
@@ -29,12 +32,7 @@ class MessageController extends Controller
      */
     public function store(Request $request, $article_id)
     {
-        echo 'test'.$article_id;
-        $message = new Message();
-        $message->message_article_id = $article_id;
-        $message->message_author = Auth::user()->name;
-        $message->message_content = $request->content;
-        $message->save();
+        $this->messageRepo->messageStore($request, $article_id);
 
         return redirect('/article/'.$article_id);
     }
@@ -47,7 +45,8 @@ class MessageController extends Controller
      */
     public function destroy($article_id, $message_id)
     {
-        $message = Message::where('message_id', '=', $message_id)->delete();
+        $this->messageRepo->messageDestroy($message_id);
+        
         return Redirect('/article/'.$article_id);
     }
 }
