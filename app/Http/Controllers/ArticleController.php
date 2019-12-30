@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Message;
 use App\Role;
+use App\repositories\ArticleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
-    public function __construct()
+    protected $articleRepo;
+
+    public function __construct(ArticleRepository $articleRepo)
     {
-        $this->middleware('auth');
+        $this->articleRepo = $articleRepo;
     }
 
     public function create()
@@ -28,12 +31,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $article = new Article();
-        $article->author = Auth::user()->name;
-        $article->title = request('title');
-        $article->catagory = request('catagory');
-        $article->content = request('content');
-        $article->save();
+        $this->articleRepo->articleStore($request);
 
         return Redirect('/home');
     }
@@ -50,12 +48,11 @@ class ArticleController extends Controller
         ->join('messages', 'articles.id', '=', 'message_article_id')
         ->where('message_article_id', '=', $id)
         ->get();*/
-        $article = Article::where('id', '=', $id)->get();
         $message = Message::where('message_article_id', '=', $id)->get();
         $roles = Role::where('uid', '=', Auth::user()->id)->get();
 
         return view('show')
-            ->with('articles', $article)
+            ->with('articles', $this->articleRepo->getArticleById($id))
             ->with('messages', $message)
             ->with('roles', $roles);
     }
@@ -81,10 +78,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        $article->title = request('title');
-        $article->catagory = request('catagory');
-        $article->content = request('content');
-        $article->save();
+        $this->articleRepo->articleEdit($request, $article->id);
 
         return redirect('/home');
     }
@@ -97,14 +91,14 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $article->delete();
+        $this->articleRepo->articleDestroy($article->id);
 
         return redirect('/home');
     }
 
     public function catagory($catagory)
     {
-        $article = Article::where('catagory', '=', $catagory)->get();
+        $article = $this->articleRepo->getArticleByCatagory($catagory);
         $roles = Role::where('uid', '=', Auth::user()->id)->get();
 
         return view('home')
@@ -114,7 +108,7 @@ class ArticleController extends Controller
 
     public function search(Request $request)
     {
-        $article = Article::where('title', 'like', "%" . $request->key . "%")->get();
+        $article = $this->articleRepo->getArticleByKeyword($request->key);
         $roles = Role::where('uid', '=', Auth::user()->id)->get();
 
         return view('home')
