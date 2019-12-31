@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class roleRepository{
 
@@ -15,13 +16,24 @@ class roleRepository{
         $this->role = $role;
     }
 
-    public function setInitRole($id)
+    public function checkRoleInit($id)
     {
-        Role::create([
-            'uid' => $id,
-            'roles' => 'normal',
-            'description' => 'no special',
-        ]);
+        Role::firstOrCreate(
+            ['uid' => $id],
+            ['roles' => 'normal',
+            'description' => 'no special']
+        );
+        return;
+    }
+
+    public function upgrade($id)
+    {
+        Role::where('uid', $id)->update(['roles' => 'admin']);
+    }
+
+    public function downgrade($id)
+    {
+        Role::where('uid', $id)->update(['roles' => 'normal']);
     }
 
 }

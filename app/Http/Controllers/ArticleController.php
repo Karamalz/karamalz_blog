@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\services\ArticleService;
+use App\Http\Requests\articleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,7 @@ class ArticleController extends Controller
     }
 
     // store input article
-    public function store(Request $request)
+    public function store(articleRequest $request)
     {
         $this->articleService->store($request);
         return Redirect('/home');
@@ -50,7 +51,7 @@ class ArticleController extends Controller
     }
 
     // update $id article 
-    public function update(Request $request, $id)
+    public function update(articleRequest $request, $id)
     {
         $this->articleService->update($request, $id);
         return redirect('/home');

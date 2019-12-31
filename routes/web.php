@@ -13,10 +13,17 @@
 
 Auth::routes();
 
-// message
-Route::post('/message/{article_id}', 'MessageController@store');
+//home
+Route::get('/home', 'ArticleController@index')->name('home');
 
-Route::get('/message/delete/{article_id}/{message_id}', 'MessageController@destroy');
+Route::get('/', 'ArticleController@index');
+
+// message
+Route::group( ['prefix' => 'message', 'middleware' => 'auth'], function() {
+    Route::post('{article_id}', 'MessageController@store');
+
+    Route::get('delete/{article_id}/{message_id}', 'MessageController@destroy');
+});
 
 //article
 Route::group( ['prefix' => 'article', 'middleware' => 'auth'], function() {
@@ -35,14 +42,15 @@ Route::group( ['prefix' => 'article', 'middleware' => 'auth'], function() {
     Route::get('/catagory/{catagory}', 'ArticleController@catagory');
 
     Route::get('/search', 'ArticleController@search');
+
+    Route::get('/user/{name}', 'ArticleController@user');
     
     Route::get('{id}', 'ArticleController@show');
 });
 
-//user
-Route::get('/user/{name}', 'ArticleController@user');
+//role
+Route::group( ['prefix' => 'role', 'middleware' => 'auth'], function() {
+    Route::get('upgrade', 'RoleController@roleUpgrade');
 
-//home
-Route::get('/home', 'ArticleController@index')->name('home');
-
-Route::get('/', 'ArticleController@index');
+    Route::get('downgrade', 'RoleController@roleDowngrade');
+});

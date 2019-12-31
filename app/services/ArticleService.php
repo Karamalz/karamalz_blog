@@ -12,7 +12,6 @@ class ArticleService
 {
     protected $articleRepo;
     protected $messageRepo;
-    protected $roleRepo;
 
     public function __construct(ArticleRepository $articleRepo, MessageRepository $messageRepo, RoleRepository $roleRepo)
     {
@@ -23,6 +22,7 @@ class ArticleService
 
     public function index()
     {
+        if(Auth::check()) $this->roleRepo->checkRoleInit(Auth::user()->id);
         return $this->articleRepo->getAllArticle();
     }
 

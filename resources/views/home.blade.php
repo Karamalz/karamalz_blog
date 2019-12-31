@@ -8,9 +8,9 @@
         <p class="ellipsis" style="border-top:1px solid; padding-left:10%; font-family:verdana; font-size:20px;">{{ $post->content }}</p>
     </div>
     <div style="float:right">
-        <span>分類：<a href="/catagory/{{ $post->catagory }}" class="active" style="font-family:verdana">{{ $post->catagory }}</a></span>
+        <span>分類：<a href="/article/catagory/{{ $post->catagory }}" class="active" style="font-family:verdana">{{ $post->catagory }}</a></span>
         &nbsp;
-        <span>作者：<a href="/user/{{ $post->author }}" class="active" style="font-family:verdana">{{ $post->author }}</a></span>
+        <span>作者：<a href="/article/user/{{ $post->author }}" class="active" style="font-family:verdana">{{ $post->author }}</a></span>
         &nbsp;
         &nbsp;
 

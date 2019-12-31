@@ -32,6 +32,11 @@
 
                 <p class="chinese" style="font-size:20px;">Leave message</p>
                 <textarea name="content" id="content" rows="5" cols="30"></textarea>
+                @if ($errors->has('content'))
+
+                <p class="text-danger">{{ $errors->first('content') }}</p>
+                @endif
+
                 <div class="control">
                     <button class="button is-link" type="submit">Submit</button>
                 </div>
