@@ -2,119 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\repositories\ArticleRepository;
-use App\repositories\MessageRepository;
+use App\services\ArticleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
-    protected $articleRepo;
-    protected $messageRepo;
+    protected $articleService;
 
-    public function __construct(ArticleRepository $articleRepo, MessageRepository $messageRepo)
+    public function __construct(ArticleService $articleService)
     {
-        $this->articleRepo = $articleRepo;
-        $this->messageRepo = $messageRepo;
+        $this->articleService = $articleService;
     }
 
+    // display all articles
     public function index()
     {
         return view('home')
-            ->with('posts',$this->articleRepo->getAllArticle());
+            ->with('posts',$this->articleService->index());
     }
 
+    // display create article page
     public function create()
     {
         return view('create');
     }
 
+    // store input article
     public function store(Request $request)
     {
-        $this->validate(
-            $request, 
-            [
-                'title' => ['required', 'max:255', 'regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/'],
-                'catagory' => ['required'],
-                'content' => ['regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/']
-            ],
-            [
-                'title.required' => 'title is required',
-                'title.max' => 'title max length is 255',
-                'title.regex' => 'your title contains an unacceptable character',
-                'catagory.require' => 'catagory is required',
-                'content.regex' => 'your content contains an unacceptable character'
-            ]
-        );
-        $this->articleRepo->articleStore($request);
-
+        $this->articleService->store($request);
         return Redirect('/home');
     }
 
+    // show $id article
     public function show($id)
     {
         return view('show')
-            ->with('articles', $this->articleRepo->getArticleById($id))
-            ->with('messages', $this->messageRepo->getMessageByArticleId($id));
+            ->with($this->articleService->show($id));
     }
 
+    // show edit article page with $id article
     public function edit($id)
     {
-        $article = $this->articleRepo->getArticleById($id);
-        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id,403);
         return view('edit')
-            ->with('articles', $article);
+            ->with('articles', $this->articleService->edit($id));
     }
 
+    // update $id article 
     public function update(Request $request, $id)
     {
-        $validate = $this->validate(
-            $request, 
-            [
-                'title' => ['required', 'max:255', 'regex:[A-Za-z0-9]'],
-                'catagory' => ['required'],
-                'content' => ['required', 'regex:[A-Za-z0-9]']
-            ],
-            [
-                'title.required' => 'title is required',
-                'title.max' => 'title max length is 255',
-                'title.regex' => 'your title contains an unacceptable character',
-                'catagory.required' => 'catagory is required',
-                'content.required' => 'contetn is required',
-                'content.regex' => 'your content contains an unacceptable character',
-            ]
-        );
-        $article = $this->articleRepo->getArticleById($id);
-        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id,403);
-        $this->articleRepo->articleEdit($request, $id);
-
+        $this->articleService->update($request, $id);
         return redirect('/home');
     }
 
+    // destroy $id article
     public function destroy($id)
     {
-        $article = $this->articleRepo->getArticleById($id);
-        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id,403);
-        $this->articleRepo->articleDestroy($id);
-
+        $this->articleService->destroy($id);
         return redirect('/home');
     }
 
+    // find and show all $catagory article
     public function catagory($catagory)
     {
         return view('home')
-            ->with('posts', $this->articleRepo->getArticleByCatagory($catagory));
+            ->with('posts', $this->articleService->catagory($catagory));
     }
 
+    // find and show article which title contains $request->key
     public function search(Request $request)
     {
         return view('home')
-            ->with('posts', $this->articleRepo->getArticleByKeyword($request->key));
+            ->with('posts', $this->articleService->search($request->key));
     }
 
+    // find and show article which author is $name
     public function user($name)
     {
         return view('home')
-            ->with('posts', $this->articleRepo->getArticleByUsername($name));
+            ->with('posts', $this->articleService->user($name));
     }
 }
