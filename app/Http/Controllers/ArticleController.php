@@ -31,6 +31,21 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate(
+            $request, 
+            [
+                'title' => ['required', 'max:255', 'regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/'],
+                'catagory' => ['required'],
+                'content' => ['regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/']
+            ],
+            [
+                'title.required' => 'title is required',
+                'title.max' => 'title max length is 255',
+                'title.regex' => 'your title contains an unacceptable character',
+                'catagory.require' => 'catagory is required',
+                'content.regex' => 'your content contains an unacceptable character'
+            ]
+        );
         $this->articleRepo->articleStore($request);
 
         return Redirect('/home');
@@ -38,7 +53,6 @@ class ArticleController extends Controller
 
     public function show($id)
     {
-        echo $id;
         return view('show')
             ->with('articles', $this->articleRepo->getArticleById($id))
             ->with('messages', $this->messageRepo->getMessageByArticleId($id));
@@ -54,6 +68,22 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validate = $this->validate(
+            $request, 
+            [
+                'title' => ['required', 'max:255', 'regex:[A-Za-z0-9]'],
+                'catagory' => ['required'],
+                'content' => ['required', 'regex:[A-Za-z0-9]']
+            ],
+            [
+                'title.required' => 'title is required',
+                'title.max' => 'title max length is 255',
+                'title.regex' => 'your title contains an unacceptable character',
+                'catagory.required' => 'catagory is required',
+                'content.required' => 'contetn is required',
+                'content.regex' => 'your content contains an unacceptable character',
+            ]
+        );
         $article = $this->articleRepo->getArticleById($id);
         abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id,403);
         $this->articleRepo->articleEdit($request, $id);

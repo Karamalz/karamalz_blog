@@ -10,6 +10,11 @@
         <div class="control" style="padding-top:5px">
             <textarea name="title" id="title" rows="1" cols="50"></textarea>
         </div>
+        @if ($errors->has('title'))
+
+            <span class="text-danger">{{ $errors->first('title') }}</span>
+        @endif
+
     </div>
     <div class="field">
         <h3>Catagory</h3>
@@ -27,6 +32,11 @@
         <div class="control" style="padding-top:5px">
             <textarea name="content" id="content" rows="10" cols="50"></textarea>
         </div>
+        @if ($errors->has('content'))
+
+            <span class="text-danger">{{ $errors->first('content') }}</span>
+        @endif
+
     </div>
     <input type="button" value="Cancel" onclick="location.href='/home'">
     <div class="field is-grouped">
