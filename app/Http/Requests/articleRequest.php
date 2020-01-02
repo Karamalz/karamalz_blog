@@ -26,9 +26,9 @@ class articleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'max:255', 'alpha_num'],
+            'title' => ['required', 'max:255', 'regex:/^[A-Za-z0-9?., ]+$/'],
             'catagory' => ['required'],
-            'content' => ['required', 'alpha_num']
+            'content' => ['required', 'regex:/^[A-Za-z0-9?., ]+$/']
         ];
     }
 }

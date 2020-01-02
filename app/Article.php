@@ -8,7 +8,7 @@ class Article extends Model
 {
 
     protected $fillable = [
-        'author_id', 'author', 'title', 'catagory', 'content'
+        'author_id', 'author', 'title', 'catagory', 'content',
     ];
 
     public function messages()

@@ -26,7 +26,7 @@ class messageRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => ['required', 'alpha_num']
+            'content' => ['required', 'regex:/^[A-Za-z0-9?., ]+$/']
         ];
     }
 }
