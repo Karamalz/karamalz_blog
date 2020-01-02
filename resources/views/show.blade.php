@@ -4,7 +4,7 @@
 
         @if (isset($articles))
         @foreach($articles as $article)
-            
+        @include('flash::message')
             <h1 style="text-align:center; border-bottom:1px solid; line-height:80px; padding-bottom:1.5rem">{{ $article->title }}</h1>
             <p style="width:50%; padding-left:5%; font-size:24px">{{ $article->content }}</p>
             <div class="centering" style="border:1px solid; height:30px; line-height:30px; width:50%">
@@ -15,7 +15,7 @@
 
             <div class="centering" style="border:1px solid; width:50%; height:100px;">
                 <div style="margin-top:5px; line-height:12px; height:12px;">
-                    <p style="font-size:12px;">{{ $message->message_author }} {{ $loop->iteration }}樓</p>
+                    <p style="font-size:12px;">{{ $loop->iteration }}樓 {{ $message->message_author }}</p>
                 </div>
                 <div style="margin-top:2px;">
                     <p style="font-size:22px;">{{ $message->message_content }}</p>

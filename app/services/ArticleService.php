@@ -47,25 +47,18 @@ class ArticleService
     public function edit($id)
     {
         $article = $this->articleRepo->getArticleById($id);
-        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id, 403, 'You are not the author!');
         return $article;
     }
 
     public function update($request, $id)
     {
-        $article = $this->articleRepo->getArticleById($id);
-        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id, 403, 'You are not the author!');
         $this->articleRepo->articleEdit($request, $id);
-
         return;
     }
 
     public function destroy($id)
     {
-        $article = $this->articleRepo->getArticleById($id);
-        abort_if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id, 403, 'You are not the author!');
         $this->articleRepo->articleDestroy($id);
-
         return;
     }
 
@@ -82,5 +75,10 @@ class ArticleService
     public function user($name)
     {
         return $this->articleRepo->getArticleByUsername($name);
+    }
+
+    public function getArticle($id)
+    {
+        return $this->articleRepo->getArticleById($id);
     }
 }

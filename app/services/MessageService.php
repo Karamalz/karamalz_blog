@@ -15,6 +15,11 @@ class MessageService
         $this->messageRepo = $messageRepo;
     }
 
+    public function getMessage($message_id)
+    {
+        return $this->messageRepo->getMessageById($message_id);
+    }
+
     public function store($request, $article_id)
     {
         $this->messageRepo->messageStore($request, $article_id);
@@ -30,7 +35,6 @@ class MessageService
     public function destroy($message_id)
     {
         $message = $this->messageRepo->getMessageById($message_id);
-        abort_if(Auth::user()->roles->roles=='normal' && $message[0]->message_author_id != Auth::user()->id, 403, 'You are not the author!');
         $this->messageRepo->messageDestroy($message_id);        
         return;
     }
