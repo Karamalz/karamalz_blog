@@ -21,7 +21,7 @@ class UserRepository{
     public function index()
     {
         $users = DB::table('users')
-            ->select('users.id', 'name', 'roles', 'description')
+            ->select('users.id', 'name', 'email', 'roles', 'description')
             ->join('roles', 'users.id', '=', 'roles.uid')
             ->orderBy('users.id')
             ->get();
