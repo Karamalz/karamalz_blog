@@ -23,6 +23,7 @@ class UserRepository{
         $users = DB::table('users')
             ->select('users.id', 'name', 'roles', 'description')
             ->join('roles', 'users.id', '=', 'roles.uid')
+            ->orderBy('users.id')
             ->get();
         return $users;
     }

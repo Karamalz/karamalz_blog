@@ -46,7 +46,7 @@ class ArticleRepository{
 
     public function getAllArticle()
     {
-        return Article::all();
+        return Article::orderby('id')->get();
     }
 
     public function getArticleById($id)

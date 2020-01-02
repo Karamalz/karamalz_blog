@@ -35,12 +35,9 @@ class ArticleService
 
     public function show($id)
     {
-        $article = $this->articleRepo->getArticleById($id);
-        $message = $this->messageRepo->getMessageByArticleId($id);
-
         return [
-            'articles' => $article,
-            'messages' => $message
+            'articles' => $this->articleRepo->getArticleById($id),
+            'messages' => $this->messageRepo->getMessageByArticleId($id),
         ];
     }
 
