@@ -3,16 +3,19 @@
 namespace App\services;
 
 use App\repositories\RoleRepository;
+use App\repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RoleService
 {
     protected $roleRepo;
+    protected $userRepo;
 
-    public function __construct(RoleRepository $roleRepo)
+    public function __construct(RoleRepository $roleRepo, UserRepository $userRepo)
     {
         $this->roleRepo = $roleRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function initRole($id)
@@ -21,9 +24,20 @@ class RoleService
         return;
     }
 
+    public function index()
+    {
+        $users = $this->userRepo->index();
+        return $users;
+    }
+
+    public function findRole($id)
+    {
+        return $this->roleRepo->findRole($id);
+    }
+
     public function upgradeRole($id)
     {
-        $this->roleRepo->setInitRole($id);
+        $this->roleRepo->upgrade($id);
         return;
     }
 

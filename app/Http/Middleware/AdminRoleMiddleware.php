@@ -4,21 +4,15 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+use App\services\RoleService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class RoleMiddleware
+class AdminRoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     public function handle($request, Closure $next)
     {
-
+        if(Auth::user()->roles->roles != 'WebMaster') return alert('You are not WebMaster');
         return $next($request);
     }
 }

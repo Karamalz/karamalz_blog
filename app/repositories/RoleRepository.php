@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
-class roleRepository{
+class RoleRepository{
 
     protected $role;
 
@@ -24,6 +24,11 @@ class roleRepository{
             'description' => 'no special']
         );
         return;
+    }
+
+    public function findRole($id)
+    {
+        Role::where('uid', $id)->get();
     }
 
     public function upgrade($id)

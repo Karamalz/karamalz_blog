@@ -13,16 +13,23 @@ class RoleController extends Controller
         $this->roleService = $roleService;
     }
     
-    public function roleUpgrade() 
+    public function index()
     {
-        $this->roleService->upgradeRole();
-        return view('admin');
+        $users = $this->roleService->index();
+        return view('admin')
+            ->with('users',$users);
     }
 
-    public function roleDowngrade()
+    public function roleUpgrade($id) 
     {
-        $this->roleService->downRole();
-        return view('admin');
+        $this->roleService->upgradeRole($id);
+        return redirect('/admin/index');
+    }
+
+    public function roleDowngrade($id)
+    {
+        $this->roleService->downgradeRole($id);
+        return redirect('/admin/index');
     }
     
 }

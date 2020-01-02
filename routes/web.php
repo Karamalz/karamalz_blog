@@ -49,8 +49,10 @@ Route::group( ['prefix' => 'article', 'middleware' => 'auth'], function() {
 });
 
 //role
-Route::group( ['prefix' => 'role', 'middleware' => 'auth'], function() {
-    Route::get('upgrade', 'RoleController@roleUpgrade');
+Route::group( ['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::get('/index', 'RoleController@index')->middleware(['admin.role:id']);
 
-    Route::get('downgrade', 'RoleController@roleDowngrade');
+    Route::get('/role/{id}/upgrade', 'RoleController@roleUpgrade');
+
+    Route::get('/role/{id}/downgrade', 'RoleController@roleDowngrade');
 });

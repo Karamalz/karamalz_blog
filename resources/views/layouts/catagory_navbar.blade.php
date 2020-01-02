@@ -31,6 +31,9 @@
                 <li class="nav-item @yield('nav_else')">
                     <a class="nav-link" href="/article/catagory/Else">Else</a>
                 </li>
+                <li class="nav-item @yield('nav_admin')">
+                    <a class="nav-link" href="/admin/index">Admin</a>
+                </li>
             </ul>
         </div>
     </div>
