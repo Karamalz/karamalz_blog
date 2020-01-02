@@ -12,7 +12,10 @@ class AdminRoleMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->roles->roles != 'WebMaster') return alert('You are not WebMaster');
+        if(Auth::user()->roles->roles != 'WebMaster') {
+            flash('You are not WebMaster')->warning(); 
+            return redirect('/home');
+        }
         return $next($request);
     }
 }

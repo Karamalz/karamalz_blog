@@ -2,6 +2,7 @@
 
 @section('content')
 @if (isset($posts))
+@include('flash::message')
     @foreach ($posts as $post)
     <div style="height:100px; margin-top:3%">
         <span class="article-title" style="text-align:left;font-size:28px; font-weight:bold; font-family:verdana"> <a href="/article/{{ $post->id }}" class="active">{{ $post->title }}</a></span>
