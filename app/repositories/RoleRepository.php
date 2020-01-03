@@ -26,11 +26,6 @@ class RoleRepository{
         return;
     }
 
-    public function findRole($id)
-    {
-        Role::where('uid', $id)->get();
-    }
-
     public function upgrade($id)
     {
         Role::where('uid', $id)->update(['roles' => 'admin']);

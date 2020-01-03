@@ -26,15 +26,8 @@ class MessageService
         return;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Message  $message
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($message_id)
     {
-        $message = $this->messageRepo->getMessageById($message_id);
         $this->messageRepo->messageDestroy($message_id);        
         return;
     }

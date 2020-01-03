@@ -20,17 +20,17 @@ Route::get('/', 'ArticleController@index');
 
 //article
 Route::group(['prefix' => 'article', 'middleware' => 'auth'], function () {
+    Route::get('create', 'ArticleController@create');
+
     Route::post('store', 'ArticleController@store');
+
+    Route::get('{id}/edit', 'ArticleController@edit')->middleware(['article.author.role']);
 
     Route::post('update/{id}', 'ArticleController@update')->middleware(['article.author.role']);
 
     Route::post('{id}/delete', 'ArticleController@destroy')->middleware(['article.author.role']);
 
     Route::get('', 'ArticleController@index');
-
-    Route::get('create', 'ArticleController@create');
-
-    Route::get('{id}/edit', 'ArticleController@edit')->middleware(['article.author.role']);
 
     Route::get('/catagory/{catagory}', 'ArticleController@catagory');
 

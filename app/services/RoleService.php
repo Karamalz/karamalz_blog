@@ -30,11 +30,6 @@ class RoleService
         return $users;
     }
 
-    public function findRole($id)
-    {
-        return $this->roleRepo->findRole($id);
-    }
-
     public function upgradeRole($id)
     {
         $this->roleRepo->upgrade($id);
