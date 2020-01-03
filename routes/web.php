@@ -20,17 +20,17 @@ Route::get('/', 'ArticleController@index');
 
 //article
 Route::group(['prefix' => 'article', 'middleware' => 'auth'], function () {
-    Route::get('create', 'ArticleController@create');
+    Route::get('/create', 'ArticleController@create');
 
-    Route::post('store', 'ArticleController@store');
+    Route::post('/store', 'ArticleController@store');
 
-    Route::get('{id}/edit', 'ArticleController@edit')->middleware(['article.author.role']);
+    Route::get('/{id}/edit', 'ArticleController@edit')->middleware(['article.author.role']);
 
-    Route::post('update/{id}', 'ArticleController@update')->middleware(['article.author.role']);
+    Route::post('/update/{id}', 'ArticleController@update')->middleware(['article.author.role']);
 
-    Route::post('{id}/delete', 'ArticleController@destroy')->middleware(['article.author.role']);
+    Route::post('/{id}/delete', 'ArticleController@destroy')->middleware(['article.author.role']);
 
-    Route::get('', 'ArticleController@index');
+    Route::get('/', 'ArticleController@index');
 
     Route::get('/catagory/{catagory}', 'ArticleController@catagory');
 
@@ -38,14 +38,14 @@ Route::group(['prefix' => 'article', 'middleware' => 'auth'], function () {
 
     Route::get('/user/{name}', 'ArticleController@user');
 
-    Route::get('{id}', 'ArticleController@show');
+    Route::get('/{id}', 'ArticleController@show');
 });
 
 // message
 Route::group(['prefix' => 'message', 'middleware' => 'auth'], function () {
-    Route::post('{article_id}', 'MessageController@store');
+    Route::post('/{article_id}', 'MessageController@store');
 
-    Route::get('delete/{article_id}/{message_id}', 'MessageController@destroy')->middleware(['message.author.role']);
+    Route::get('/delete/{article_id}/{message_id}', 'MessageController@destroy')->middleware(['message.author.role']);
 });
 
 //role

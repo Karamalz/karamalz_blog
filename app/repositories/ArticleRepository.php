@@ -6,7 +6,8 @@ use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ArticleRepository{
+class ArticleRepository
+{
 
     protected $article;
 
@@ -30,18 +31,20 @@ class ArticleRepository{
 
     public function articleEdit(Request $request, $id)
     {
-        $update_article = $this->article->find($id);
-        $update_article->title = $request->title;
-        $update_article->catagory = $request->catagory;
-        $update_article->content = $request->content;
-        $update_article->save();
+        Article::where('id', $id)
+            ->update([
+                'title' => $request->title,
+                'catagory' => $request->catagory,
+                'content' => $request->content,
+            ]);
 
         return;
     }
 
     public function articleDestroy($id)
-    {      
-        return Article::find($id)->delete();
+    {
+        Article::find($id)->delete();
+        return;
     }
 
     public function getAllArticle()
@@ -61,7 +64,7 @@ class ArticleRepository{
 
     public function getArticleByKeyword($key)
     {
-        return Article::where('title', 'like', "%".$key."%")->get();
+        return Article::where('title', 'like', "%" . $key . "%")->get();
     }
 
     public function getArticleByUsername($name)

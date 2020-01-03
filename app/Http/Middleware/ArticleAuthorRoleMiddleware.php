@@ -20,7 +20,7 @@ class ArticleAuthorRoleMiddleware
     {
         $article = $this->articleService->getArticle($request->route('id'));
         if(Auth::user()->roles->roles=='normal' && $article[0]->author_id != Auth::user()->id) {
-            flash('You are not the author!'); 
+            flash('You are not the author!');
             return back();
         }
         return $next($request);

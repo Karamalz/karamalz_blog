@@ -34,12 +34,12 @@ class MessageRepository{
 
     public function getmessageById($id)
     {
-        return message::where('message_id', '=', $id)->get();
+        return Message::where('message_id', '=', $id)->get();
     }
     
     public function getmessageByArticleId($id)
     {
-        return message::where('message_article_id', '=', $id)->get();
+        return Message::where('message_article_id', '=', $id)->get();
     }
 
 }
